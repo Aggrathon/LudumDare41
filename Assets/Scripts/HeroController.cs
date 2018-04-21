@@ -67,6 +67,8 @@ public class HeroController : MonoBehaviour {
 		if (CheckPosition(pos))
 		{
 			//TODO: Kill the units
+			Debug.LogError("Killing of your own units is not yet implemented");
+			GameState.instance.EnemyTurn();
 		}
 		else
 		{

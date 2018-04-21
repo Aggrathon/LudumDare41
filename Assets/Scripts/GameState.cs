@@ -6,6 +6,7 @@ public class GameState : MonoBehaviour {
 
 	public static GameState instance { get; protected set; }
 	public HeroController heroes;
+	public EnemyController enemies;
 	public float startDelay = 1.5f;
 
 	int turns;
@@ -20,14 +21,14 @@ public class GameState : MonoBehaviour {
 	IEnumerator DelayedStart()
 	{
 		yield return new WaitForSeconds(startDelay);
-		PlayerTurn();
+		turns--;
+		EnemyTurn();
 	}
 
 	public void EnemyTurn()
 	{
 		turns++;
-		//TODO: Enemy turn
-		PlayerTurn();
+		enemies.StartTurn();
 	}
 
 	public void PlayerTurn()
