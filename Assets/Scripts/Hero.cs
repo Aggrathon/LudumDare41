@@ -7,20 +7,19 @@ public class Hero : MonoBehaviour {
 	public SpriteRenderer sprite;
 	int cd;
 
-	AAbility ability;
+	public AAbility ability;
 
 	void Start () {
 		if (sprite == null)
 			sprite = GetComponent<SpriteRenderer>();
 		GetComponentInParent<HeroController>().SpawnHero(this);
 		cd = 0;
-		ability = GetComponent<AAbility>();
 	}
 
 	public void DoAction(int lane)
 	{
 		cd = ability.cooldown;
-		ability.SelectTarget();
+		ability.DoAction(lane);
 	}
 
 	public bool CanMove()
@@ -41,7 +40,6 @@ public abstract class AAbility : MonoBehaviour
 {
 	public int cooldown = 1;
 
-	public abstract void SelectTarget();
-
-	protected abstract void DoAction();
+	public abstract void DoAction(int lane);
+	
 }

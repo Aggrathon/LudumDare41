@@ -42,10 +42,7 @@ public class EnemyController : MonoBehaviour {
 			{
 				if (grid[i, j].enemy != null && grid[i, j - 1].enemy == null)
 				{
-					grid[i, j - 1].enemy = grid[i, j].enemy;
-					grid[i, j - 1].easeInOut = grid[i, j].easeInOut;
-					grid[i, j].enemy = null;
-					StartCoroutine(MoveEnemy(i, j - 1));
+					Move(i, j, i, j - 1);
 					yield return moveSpread;
 				}
 			}
@@ -110,6 +107,14 @@ public class EnemyController : MonoBehaviour {
 		if (j > 0 && j < width - 1 && grid[i, j + 1].enemy != null && grid[i, j - 1].enemy != null)
 			return true;
 		return false;
+	}
+
+	public void Move(int i, int j, int i_, int j_)
+	{
+		grid[i_, j_].enemy = grid[i, j].enemy;
+		grid[i_, j_].easeInOut = grid[i, j].easeInOut;
+		grid[i, j].enemy = null;
+		StartCoroutine(MoveEnemy(i, j - 1));
 	}
 
 	IEnumerator MoveEnemy(int i, int j, bool check=false)

@@ -4,32 +4,78 @@ using UnityEngine;
 
 public class Explosion : AAbility
 {
-	int x, y;
+	public LineRenderer lr;
+	public ParticleSystem ps;
+	public AudioSource au;
 
-	public override void SelectTarget()
+	public float beamSpeed = 3.0f;
+
+	public override void DoAction(int lane)
 	{
 		var grid = GameState.instance.enemies.GetGrid();
-		for (int i = 0; i < grid.GetLength(0); i++)
+		for (int j = 0; j < grid.GetLength(1); j++)
 		{
-			for (int j = 0; j < grid.GetLength(1); j++)
-			{
-				int i_ = i;
-				int j_ = j;
-				SelectionMarkers.instance.AddMarker(grid[i, j].position, () => {
-					x = i_;
-					y = j_;
-					DoAction();
-				});
-			}
+			int i_ = lane;
+			int j_ = j;
+			SelectionMarkers.instance.AddMarker(grid[lane, j].position, () => {
+				StartCoroutine(Action(i_, j_));
+			});
 		}
 	}
 
-	protected override void DoAction()
+	IEnumerator Action(int i, int j)
 	{
 		var grid = GameState.instance.enemies.GetGrid();
-		if (grid[x, y].enemy != null)
-			grid[x, y].enemy.Die();
-
+		Vector3 pos = transform.position;
+		//LINE FX
+		lr.gameObject.SetActive(true);
+		lr.SetPosition(0, pos);
+		float t = 0f;
+		do
+		{
+			t += Time.deltaTime * beamSpeed;
+			pos = Vector3.Lerp(transform.position, grid[i, j].position, t);
+			lr.SetPosition(1, pos);
+			yield return null;
+		} while (t < 1.0f);
+		//Prticle FX
+		if (ps != null)
+		{
+			ps.transform.position = grid[i, j].position;
+			ps.Play();
+		}
+		yield return new WaitForSeconds(0.1f);
+		//KILL
+		if (grid[i, j].enemy != null)
+			grid[i, j].enemy.Die();
+		//PUSH
+		for (int x = i - 1; x >= 0; x--)
+			if (grid[x, j].enemy == null) {
+				for (int y = x + 1; y < i; y++)
+					GameState.instance.enemies.Move(y, j, y - 1, j);
+				break;
+			}
+		for (int x = j - 1; x >= 0; x--)
+			if (grid[i, x].enemy == null) {
+				for (int y = x + 1; y < j; y++)
+					GameState.instance.enemies.Move(i, y, i, y - 1);
+				break;
+			}
+		for (int x = i + 1; x < grid.GetLength(0); x++)
+			if (grid[x, j].enemy == null) {
+				for (int y = x - 1; y > i; y--)
+					GameState.instance.enemies.Move(y, j, y + 1, j);
+				break;
+			}
+		for (int x = j + 1; x < grid.GetLength(1); x++)
+			if (grid[i, x].enemy == null) {
+				for (int y = x - 1; y > j; y--)
+					GameState.instance.enemies.Move(i, y, i, y + 1);
+				break;
+			}
+		if (i > 1 && grid[i-1, j].enemy != null && grid[i, j].enemy != null)
+		yield return new WaitForSeconds(0.1f);
+		lr.gameObject.SetActive(false);
 		GameState.instance.EnemyTurn();
 	}
 }
