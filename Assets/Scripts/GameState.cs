@@ -25,9 +25,9 @@ public class GameState : MonoBehaviour {
 
 	IEnumerator DelayedStart()
 	{
+		enemies.SpawnEnemies();
 		yield return new WaitForSeconds(startDelay);
-		turns--;
-		EnemyTurn();
+		PlayerTurn();
 	}
 
 	public void EnemyTurn()

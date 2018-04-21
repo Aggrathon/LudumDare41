@@ -32,7 +32,6 @@ public class EnemyController : MonoBehaviour {
 	public void StartTurn()
 	{
 		StartCoroutine(DoTurn());
-		//TODO: Move enemies forward
 	}
 
 	IEnumerator DoTurn()
@@ -77,7 +76,7 @@ public class EnemyController : MonoBehaviour {
 		GameState.instance.PlayerTurn();
 	}
 
-	void SpawnEnemies()
+	public void SpawnEnemies()
 	{
 		for (int i = 0; i < permutation.Length; i++)
 		{
@@ -137,6 +136,8 @@ public class EnemyController : MonoBehaviour {
 		}
 	}
 
+	public EnemyPos[,] GetGrid() { return grid; }
+
 	private void OnDrawGizmos()
 	{
 		if (lanes == null)
@@ -155,7 +156,7 @@ public class EnemyController : MonoBehaviour {
 			Gizmos.DrawWireSphere(spawnPoint.position, 0.5f);
 	}
 
-	struct EnemyPos
+	public struct EnemyPos
 	{
 		public Vector3 position;
 		public Enemy enemy;

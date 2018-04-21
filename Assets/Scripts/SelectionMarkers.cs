@@ -33,8 +33,6 @@ public class SelectionMarkers : MonoBehaviour {
 		for (int i = 0; i < activeIndex; i++)
 		{
 			markers[i].gameObject.SetActive(false);
-			markers[i].onClick.RemoveAllListeners();
-			markers[i].onClick.AddListener(Reset);
 		}
 		activeIndex = 0;
 	}
@@ -59,6 +57,8 @@ public class SelectionMarkers : MonoBehaviour {
 			pos.y / Screen.height * 1080,
 			0);
 		((RectTransform)button.transform).localPosition = pos;
+		button.onClick.RemoveAllListeners();
+		button.onClick.AddListener(Reset);
 		button.onClick.AddListener(callback);
 	}
 }

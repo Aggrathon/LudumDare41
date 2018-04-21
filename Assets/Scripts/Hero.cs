@@ -5,21 +5,22 @@ using UnityEngine;
 public class Hero : MonoBehaviour {
 
 	public SpriteRenderer sprite;
-	public int cooldown = 1;
 	int cd;
+
+	AAbility ability;
 
 	void Start () {
 		if (sprite == null)
 			sprite = GetComponent<SpriteRenderer>();
 		GetComponentInParent<HeroController>().SpawnHero(this);
 		cd = 0;
+		ability = GetComponent<AAbility>();
 	}
 
 	public void DoAction(int lane)
 	{
-		//TODO: Hero Actions
-		cd = cooldown;
-		GameState.instance.EnemyTurn();
+		cd = ability.cooldown;
+		ability.SelectTarget();
 	}
 
 	public bool CanMove()
@@ -34,4 +35,13 @@ public class Hero : MonoBehaviour {
 			return true;
 		}
 	}
+}
+
+public abstract class AAbility : MonoBehaviour
+{
+	public int cooldown = 1;
+
+	public abstract void SelectTarget();
+
+	protected abstract void DoAction();
 }
