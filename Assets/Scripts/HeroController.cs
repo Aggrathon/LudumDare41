@@ -66,8 +66,15 @@ public class HeroController : MonoBehaviour {
 		heroes[pos].hero.sprite.sortingOrder = 0;
 		if (CheckPosition(pos))
 		{
-			//TODO: Kill the units
-			Debug.LogError("Killing of your own units is not yet implemented");
+			var list = new List<int>();
+			for (int i = 0; i < heroes.Length; i++)
+				if (heroes[i].hero != null && CheckPosition(i))
+					list.Add(i);
+			for (int i = 0; i < list.Count; i++)
+			{
+				heroes[list[i]].hero.Die();
+				heroes[list[i]].hero = null;
+			}
 			GameState.instance.EnemyTurn();
 		}
 		else
