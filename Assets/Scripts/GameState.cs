@@ -35,4 +35,9 @@ public class GameState : MonoBehaviour {
 	{
 		heroes.StartTurn();
 	}
+
+	public void Loose()
+	{
+		Debug.Log("You Lost!");
+	}
 }

@@ -1485,6 +1485,8 @@ MonoBehaviour:
     type: 2}
   spawnPoint: {fileID: 337003943}
   spawnDensity: 0.8
+  enemyMoveTime: 0.4
+  enemyMoveSpread: 0.04
 --- !u!1 &782938882
 GameObject:
   m_ObjectHideFlags: 0
