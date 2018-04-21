@@ -36,6 +36,7 @@ public class SelectionMarkers : MonoBehaviour {
 			markers[i].onClick.RemoveAllListeners();
 			markers[i].onClick.AddListener(Reset);
 		}
+		activeIndex = 0;
 	}
 
 	public void AddMarker(Vector3 pos, UnityAction callback)
@@ -45,8 +46,6 @@ public class SelectionMarkers : MonoBehaviour {
 		if (activeIndex == markers.Count)
 		{
 			button = Instantiate<Button>(template, transform);
-			int i = activeIndex;
-			button.onClick.AddListener(() => { OnClick(i); });
 			markers.Add(button);
 		}
 		else

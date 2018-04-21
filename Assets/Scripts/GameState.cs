@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameState : MonoBehaviour {
 
@@ -8,6 +9,8 @@ public class GameState : MonoBehaviour {
 	public HeroController heroes;
 	public EnemyController enemies;
 	public float startDelay = 1.5f;
+	public GameObject skipButton;
+	public GameObject lostPanel;
 
 	int turns;
 
@@ -16,6 +19,8 @@ public class GameState : MonoBehaviour {
 		instance = this;
 		StartCoroutine(DelayedStart());
 		turns = 0;
+		skipButton.SetActive(false);
+		lostPanel.SetActive(false);
 	}
 
 	IEnumerator DelayedStart()
@@ -29,15 +34,22 @@ public class GameState : MonoBehaviour {
 	{
 		turns++;
 		enemies.StartTurn();
+		skipButton.SetActive(false);
 	}
 
 	public void PlayerTurn()
 	{
 		heroes.StartTurn();
+		skipButton.SetActive(true);
 	}
 
 	public void Loose()
 	{
-		Debug.Log("You Lost!");
+		lostPanel.SetActive(true);
+	}
+
+	public void Restart()
+	{
+		SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
 	}
 }
