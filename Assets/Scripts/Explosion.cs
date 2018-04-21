@@ -27,6 +27,9 @@ public class Explosion : AAbility
 	{
 		var grid = GameState.instance.enemies.GetGrid();
 		Vector3 pos = transform.position;
+		if (au != null)
+			au.Play();
+		yield return null;
 		//LINE FX
 		lr.gameObject.SetActive(true);
 		lr.SetPosition(0, pos);
@@ -34,8 +37,13 @@ public class Explosion : AAbility
 		do
 		{
 			t += Time.deltaTime * beamSpeed;
+			float y = 1.0f - (t - 0.5f) * (t - 0.5f) * 4f;
 			pos = Vector3.Lerp(transform.position, grid[i, j].position, t);
-			lr.SetPosition(1, pos);
+			pos.y += y*0.8f;
+			int n = Mathf.CeilToInt(t * 8f);
+			lr.positionCount = n + 1;
+			lr.SetPosition(n, pos);
+			au.transform.position = pos;
 			yield return null;
 		} while (t < 1.0f);
 		//Prticle FX
@@ -45,9 +53,6 @@ public class Explosion : AAbility
 			ps.Play();
 		}
 		yield return new WaitForSeconds(0.1f);
-		//KILL
-		if (grid[i, j].enemy != null)
-			grid[i, j].enemy.Die();
 		//PUSH
 		for (int x = i - 1; x >= 0; x--)
 			if (grid[x, j].enemy == null) {
@@ -73,9 +78,12 @@ public class Explosion : AAbility
 					GameState.instance.enemies.Move(i, y, i, y + 1);
 				break;
 			}
-		yield return new WaitForSeconds(0.2f);
+		yield return new WaitForSeconds(0.1f);
+		//KILL
+		if (grid[i, j].enemy != null)
+			grid[i, j].enemy.Die();
 		lr.gameObject.SetActive(false);
-		yield return new WaitForSeconds(0.5f);
+		yield return new WaitForSeconds(0.6f);
 		GameState.instance.enemies.CheckThreeInRow();
 		GameState.instance.EnemyTurn();
 	}
