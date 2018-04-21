@@ -1832,7 +1832,7 @@ MonoBehaviour:
   enemyPrefab: {fileID: 1026246452448148, guid: 3ea691029f0473148a9d1338a99d8978,
     type: 2}
   spawnPoint: {fileID: 337003943}
-  spawnDensity: 0.8
+  spawnDensity: 0.6
   enemyMoveTime: 0.4
   enemyMoveSpread: 0.04
 --- !u!1 &782938882

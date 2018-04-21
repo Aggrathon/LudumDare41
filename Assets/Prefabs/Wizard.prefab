@@ -116,7 +116,7 @@ MonoBehaviour:
   lr: {fileID: 120336327472082056}
   ps: {fileID: 0}
   au: {fileID: 0}
-  beamSpeed: 3
+  beamSpeed: 5
 --- !u!114 &114878652078671476
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -169,7 +169,7 @@ LineRenderer:
   - {x: 0, y: 1, z: 0}
   m_Parameters:
     serializedVersion: 2
-    widthMultiplier: 0.4
+    widthMultiplier: 0.2
     widthCurve:
       serializedVersion: 2
       m_Curve:

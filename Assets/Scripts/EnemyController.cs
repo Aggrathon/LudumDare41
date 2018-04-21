@@ -15,6 +15,7 @@ public class EnemyController : MonoBehaviour {
 	EnemyPos[,] grid;
 	int width;
 	WaitForSeconds moveSpread;
+	List<Enemy> cache;
 
 	private void Start()
 	{
@@ -27,6 +28,7 @@ public class EnemyController : MonoBehaviour {
 			for (int j = 0; j < width; j++)
 				grid[i, j] = new EnemyPos() { position = lanes[i].GetChild(j).position };
 		moveSpread = new WaitForSeconds(enemyMoveSpread);
+		cache = new List<Enemy>();
 	}
 
 	public void StartTurn()
@@ -48,17 +50,7 @@ public class EnemyController : MonoBehaviour {
 			}
 		}
 		yield return moveSpread;
-		for (int i = 0; i < lanes.Length; i++)
-		{
-			for (int j = 0; j < width; j++)
-			{
-				if (grid[i, j].enemy != null && CheckPosition(i, j))
-				{
-					//TODO: Kill the units
-					Debug.LogError("Killing of units is not yet implemented");
-				}
-			}
-		}
+		CheckThreeInRow();
 		for (int i = 0; i < lanes.Length; i++)
 		{
 			if (grid[i, 0].enemy != null)
@@ -114,12 +106,12 @@ public class EnemyController : MonoBehaviour {
 		grid[i_, j_].enemy = grid[i, j].enemy;
 		grid[i_, j_].easeInOut = grid[i, j].easeInOut;
 		grid[i, j].enemy = null;
-		StartCoroutine(MoveEnemy(i, j - 1));
+		StartCoroutine(MoveEnemy(i_, j_));
 	}
 
-	IEnumerator MoveEnemy(int i, int j, bool check=false)
+	IEnumerator MoveEnemy(int i, int j)
 	{
-		while ((grid[i, j].position - grid[i, j].enemy.transform.position).sqrMagnitude > 0.01f)
+		while (grid[i, j].enemy != null && (grid[i, j].position - grid[i, j].enemy.transform.position).sqrMagnitude > 0.01f)
 		{
 			grid[i, j].enemy.transform.position = Vector3.SmoothDamp(
 				grid[i, j].enemy.transform.position,
@@ -128,16 +120,25 @@ public class EnemyController : MonoBehaviour {
 				enemyMoveTime
 				);
 			yield return null;
-			if (grid[i, j].enemy == null)
-				yield break;
 		}
-		if (check)
+	}
+
+	public void CheckThreeInRow()
+	{
+		cache.Clear();
+		for (int i = 0; i < lanes.Length; i++)
 		{
-			if (CheckPosition(i, j))
+			for (int j = 0; j < width; j++)
 			{
-				//TODO: Kill the units
-				Debug.LogError("Killing of units is not yet implemented");
+				if (grid[i, j].enemy != null && CheckPosition(i, j))
+				{
+					cache.Add(grid[i, j].enemy);
+				}
 			}
+		}
+		for (int i = 0; i < cache.Count; i++)
+		{
+			cache[i].Die();
 		}
 	}
 

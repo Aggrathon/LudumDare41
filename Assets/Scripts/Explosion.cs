@@ -73,9 +73,10 @@ public class Explosion : AAbility
 					GameState.instance.enemies.Move(i, y, i, y + 1);
 				break;
 			}
-		if (i > 1 && grid[i-1, j].enemy != null && grid[i, j].enemy != null)
-		yield return new WaitForSeconds(0.1f);
+		yield return new WaitForSeconds(0.2f);
 		lr.gameObject.SetActive(false);
+		yield return new WaitForSeconds(0.5f);
+		GameState.instance.enemies.CheckThreeInRow();
 		GameState.instance.EnemyTurn();
 	}
 }
