@@ -31,8 +31,10 @@ public class Explosion : AAbility
 			au.Play();
 		yield return null;
 		//LINE FX
-		lr.gameObject.SetActive(true);
 		lr.SetPosition(0, pos);
+		lr.SetPosition(1, pos);
+		lr.positionCount = 2;
+		lr.gameObject.SetActive(true);
 		float t = 0f;
 		do
 		{

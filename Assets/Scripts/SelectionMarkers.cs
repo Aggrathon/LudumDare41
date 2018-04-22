@@ -9,7 +9,7 @@ public class SelectionMarkers : MonoBehaviour {
 	public static SelectionMarkers instance { get; protected set; }
 	public Button template;
 
-	Camera cam;
+
 	List<Button> markers;
 	int activeIndex;
 
@@ -17,7 +17,6 @@ public class SelectionMarkers : MonoBehaviour {
 	{
 		activeIndex = 0;
 		markers = new List<Button>();
-		cam = Camera.main;
 		instance = this;
 		template.onClick.RemoveAllListeners();
 		template.onClick.AddListener(Reset);
