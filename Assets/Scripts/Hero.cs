@@ -18,7 +18,7 @@ public class Hero : MonoBehaviour, IHelp {
 		if (sprite == null)
 			sprite = GetComponent<SpriteRenderer>();
 		GetComponentInParent<HeroController>().SpawnHero(this);
-		cd = 0;
+		cd = -1;
 	}
 
 	public void Die()

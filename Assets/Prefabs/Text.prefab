@@ -75,7 +75,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a5e044b7a46e9b4f8563a71145e5428, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  time: 1
+  time: 1.5
 --- !u!114 &114543751859793502
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -96,7 +96,7 @@ MonoBehaviour:
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
-  m_DynamicPixelsPerUnit: 1.5
+  m_DynamicPixelsPerUnit: 1
 --- !u!222 &222306715626522896
 CanvasRenderer:
   m_ObjectHideFlags: 1

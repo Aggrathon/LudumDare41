@@ -57,8 +57,7 @@ public class EnemyController : MonoBehaviour {
 		}
 		yield return moveSpread;
 		SpawnEnemies();
-		yield return moveSpread;
-		yield return moveSpread;
+		yield return new WaitForSeconds(0.2f);
 		CheckThreeInRow();
 		for (int i = 0; i < lanes.Length; i++)
 		{
