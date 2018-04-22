@@ -3300,6 +3300,7 @@ MonoBehaviour:
   spawnPoint: {fileID: 337003943}
   enemyMoveTime: 0.4
   enemyMoveSpread: 0.04
+  rewardText: {fileID: 1528355132769830, guid: b7f8f83817cc8b749982ddf809078efb, type: 2}
 --- !u!1 &802351159
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class EnemyController : MonoBehaviour {
 
@@ -9,6 +10,7 @@ public class EnemyController : MonoBehaviour {
 	public Transform spawnPoint;
 	public float enemyMoveTime = 0.4f;
 	public float enemyMoveSpread = 0.05f;
+	public GameObject rewardText;
 
 	int[] permutation;
 	EnemyPos[,] grid;
@@ -54,6 +56,9 @@ public class EnemyController : MonoBehaviour {
 			}
 		}
 		yield return moveSpread;
+		SpawnEnemies();
+		yield return moveSpread;
+		yield return moveSpread;
 		CheckThreeInRow();
 		for (int i = 0; i < lanes.Length; i++)
 		{
@@ -64,8 +69,6 @@ public class EnemyController : MonoBehaviour {
 				yield break;
 			}
 		}
-		SpawnEnemies();
-		yield return moveSpread;
 		GameState.instance.PlayerTurn();
 	}
 
@@ -163,6 +166,7 @@ public class EnemyController : MonoBehaviour {
 		}
 		for (int i = 0; i < cache.Count; i++)
 		{
+			ObjectPool.Spawn(rewardText, cache[i].transform.position).GetComponent<Text>().text = "+ " + cache.Count * 8;
 			cache[i].Die();
 		}
 		GameState.instance.score += cache.Count*cache.Count*8;
