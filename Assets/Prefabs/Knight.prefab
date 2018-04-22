@@ -594,7 +594,8 @@ MonoBehaviour:
   sprite: {fileID: 212136245240056652}
   deathFX: {fileID: 1692626850584580, guid: cc7b6de5dace3b04ab9ac01579acf030, type: 2}
   ability: {fileID: 114971461660500482}
-  _description: Charges into a line of enemy soldiers
+  _description: Charges into a line of enemy soldiers killing and knocking bak as
+    he goes.
 --- !u!114 &114971461660500482
 MonoBehaviour:
   m_ObjectHideFlags: 1

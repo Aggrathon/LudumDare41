@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -13,6 +14,7 @@ public class GameState : MonoBehaviour {
 	public GameObject skipButton;
 	public GameObject lostPanel;
 	public Text statusText;
+	public Tutorial[] tutorials;
 
 	string statusFormat;
 	int _turns;
@@ -63,8 +65,8 @@ public class GameState : MonoBehaviour {
 
 	public void EnemyTurn()
 	{
-		SelectionMarkers.instance.Reset();
 		HelpScreen.instance.CancelHelp();
+		SelectionMarkers.instance.Reset();
 		turns++;
 		enemies.StartTurn();
 		skipButton.SetActive(false);
@@ -72,8 +74,16 @@ public class GameState : MonoBehaviour {
 
 	public void PlayerTurn()
 	{
-		SelectionMarkers.instance.Reset();
+		for (int i = 0; i < tutorials.Length; i++)
+		{
+			if (tutorials[i].turn == turns)
+			{
+				tutorials[i].activate.SetActive(true);
+				Debug.Log(tutorials[i].activate);
+			}
+		}
 		HelpScreen.instance.CancelHelp();
+		SelectionMarkers.instance.Reset();
 		heroes.StartTurn();
 		skipButton.SetActive(true);
 	}
@@ -93,5 +103,13 @@ public class GameState : MonoBehaviour {
 	public void UpdateStatus()
 	{
 		statusText.text = string.Format(statusFormat, turns, kills, score);
+	}
+
+
+	[System.Serializable]
+	public struct Tutorial
+	{
+		public int turn;
+		public GameObject activate;
 	}
 }

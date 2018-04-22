@@ -46,7 +46,6 @@ public class SelectionMarkers : MonoBehaviour
 		Reset();
 		for (int i = old; i < activeIndex; i++)
 			markers[i].gameObject.SetActive(true);
-		Debug.Log(old + "  " + startIndex + "  " + activeIndex);
 		startIndex = old;
 	}
 
