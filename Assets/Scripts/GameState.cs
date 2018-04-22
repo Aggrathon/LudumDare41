@@ -79,7 +79,6 @@ public class GameState : MonoBehaviour {
 			if (tutorials[i].turn == turns)
 			{
 				tutorials[i].activate.SetActive(true);
-				Debug.Log(tutorials[i].activate);
 			}
 		}
 		HelpScreen.instance.CancelHelp();
