@@ -72,7 +72,7 @@ public class EnemyController : MonoBehaviour {
 	public void SpawnEnemies()
 	{
 		EnemyWave ew = new EnemyWave();
-		for (int i = 0; i < spawnWaves.Length; i++)
+		for (int i = spawnWaves.Length-1; i >= 0; i--)
 		{
 			if (spawnWaves[i].startTurn <= GameState.instance.turns)
 			{
@@ -88,7 +88,7 @@ public class EnemyController : MonoBehaviour {
 			int rnd = Random.Range(i, permutation.Length);
 			permutation[i] = permutation[rnd];
 			permutation[rnd] = tmp;
-			if (!CheckPosition(rnd, width-1)) {
+			if (grid[rnd, width-1].enemy == null && !CheckPosition(rnd, width-1)) {
 				float spawn = Random.value;
 				for (int j = 0; j < ew.enemies.Length; j++)
 				{

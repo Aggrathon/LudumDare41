@@ -75,7 +75,14 @@ public class HeroController : MonoBehaviour {
 				heroes[list[i]].hero.Die();
 				heroes[list[i]].hero = null;
 			}
-			GameState.instance.EnemyTurn();
+			if (list.Count == 3)
+			{
+				GameState.instance.Loose();
+			}
+			else
+			{
+				GameState.instance.EnemyTurn();
+			}
 		}
 		else
 		{

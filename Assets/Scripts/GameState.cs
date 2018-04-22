@@ -63,6 +63,7 @@ public class GameState : MonoBehaviour {
 
 	public void EnemyTurn()
 	{
+		SelectionMarkers.instance.Reset();
 		turns++;
 		enemies.StartTurn();
 		skipButton.SetActive(false);
@@ -70,12 +71,15 @@ public class GameState : MonoBehaviour {
 
 	public void PlayerTurn()
 	{
+		SelectionMarkers.instance.Reset();
 		heroes.StartTurn();
 		skipButton.SetActive(true);
 	}
 
 	public void Loose()
 	{
+		SelectionMarkers.instance.Reset();
+		skipButton.SetActive(false);
 		lostPanel.SetActive(true);
 	}
 

@@ -18,7 +18,7 @@ public class Arrow : AAbility
 	public override void DoAction(int lane)
 	{
 		var grid = GameState.instance.enemies.GetGrid();
-		for (int j = 1; j < grid.GetLength(1)-1; j++)
+		for (int j = 1; j < grid.GetLength(1); j++)
 		{
 			int i_ = lane;
 			int j_ = j;
@@ -33,6 +33,7 @@ public class Arrow : AAbility
 				gameObject.SetActive(true);
 				firstShot = true;
 				hit = false;
+				t = 0f;
 			});
 		}
 	}
@@ -42,16 +43,16 @@ public class Arrow : AAbility
 		t += Time.deltaTime * scale;
 		if (t > 1.0f)
 		{
-			if (firstShot)
-			{
-				GameState.instance.EnemyTurn();
-				firstShot = false;
-			}
 			if (!hit)
 			{
 				if (GameState.instance.enemies.GetGrid()[GameState.instance.enemies.blockedI, GameState.instance.enemies.blockedJ].enemy != null)
 					GameState.instance.enemies.GetGrid()[GameState.instance.enemies.blockedI, GameState.instance.enemies.blockedJ].enemy.Die();
 				hit = true;
+			}
+			if (firstShot)
+			{
+				GameState.instance.EnemyTurn();
+				firstShot = false;
 			}
 			if (t > 1.2f)
 			{
@@ -60,6 +61,10 @@ public class Arrow : AAbility
 				t = 0f;
 				transform.position = transform.parent.position;
 				hit = false;
+			}
+			else
+			{
+				transform.position = target;
 			}
 		}
 		else

@@ -1575,23 +1575,27 @@ MonoBehaviour:
   - startTurn: 0
     enemies:
     - prefab: {fileID: 1026246452448148, guid: 3ea691029f0473148a9d1338a99d8978, type: 2}
-      probability: 0.5
-  - startTurn: 3
-    enemies:
-    - prefab: {fileID: 1026246452448148, guid: 3ea691029f0473148a9d1338a99d8978, type: 2}
-      probability: 0.65
-  - startTurn: 8
-    enemies:
-    - prefab: {fileID: 1026246452448148, guid: 3ea691029f0473148a9d1338a99d8978, type: 2}
-      probability: 0.8
-  - startTurn: 15
-    enemies:
-    - prefab: {fileID: 1026246452448148, guid: 3ea691029f0473148a9d1338a99d8978, type: 2}
-      probability: 0.95
-  - startTurn: 20
+      probability: 0.4
+  - startTurn: 4
     enemies:
     - prefab: {fileID: 1026246452448148, guid: 3ea691029f0473148a9d1338a99d8978, type: 2}
       probability: 0.7
+  - startTurn: 8
+    enemies:
+    - prefab: {fileID: 1026246452448148, guid: 3ea691029f0473148a9d1338a99d8978, type: 2}
+      probability: 1
+  - startTurn: 12
+    enemies:
+    - prefab: {fileID: 1026246452448148, guid: 3ea691029f0473148a9d1338a99d8978, type: 2}
+      probability: 0.5
+    - prefab: {fileID: 1026246452448148, guid: 0a597b204a2153348ade3afb5533244c, type: 2}
+      probability: 0.1
+  - startTurn: 16
+    enemies:
+    - prefab: {fileID: 1026246452448148, guid: 3ea691029f0473148a9d1338a99d8978, type: 2}
+      probability: 0.6
+    - prefab: {fileID: 1026246452448148, guid: 0a597b204a2153348ade3afb5533244c, type: 2}
+      probability: 0.2
   spawnPoint: {fileID: 337003943}
   enemyMoveTime: 0.4
   enemyMoveSpread: 0.04

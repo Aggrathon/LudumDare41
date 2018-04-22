@@ -66,7 +66,7 @@ public class Charge : AAbility {
 				break;
 			}
 		}
-		while (length > 0.1f)
+		while (length > 0.2f)
 		{
 			transform.localPosition += dist * (chargeSpeed * Time.deltaTime / length);
 			yield return null;
