@@ -11,6 +11,7 @@ public class Enemy : MonoBehaviour {
 		var ps = ObjectPool.Spawn(deathFX, transform.position).GetComponent<ParticleSystem>();
 		ps.Stop();
 		ps.Play();
+		GameState.instance.kills++;
 		Destroy(gameObject);
 	}
 }

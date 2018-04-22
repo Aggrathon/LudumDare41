@@ -5,9 +5,8 @@ using UnityEngine;
 public class EnemyController : MonoBehaviour {
 
 	public Transform[] lanes;
-	public GameObject enemyPrefab;
+	public EnemyWave[] spawnWaves;
 	public Transform spawnPoint;
-	[Range(0, 1)] public float spawnDensity = 0.8f;
 	public float enemyMoveTime = 0.4f;
 	public float enemyMoveSpread = 0.05f;
 
@@ -67,19 +66,40 @@ public class EnemyController : MonoBehaviour {
 
 	public void SpawnEnemies()
 	{
+		EnemyWave ew = new EnemyWave();
+		for (int i = 0; i < spawnWaves.Length; i++)
+		{
+			if (spawnWaves[i].startTurn <= GameState.instance.turns)
+			{
+				ew = spawnWaves[i];
+				break;
+			}
+		}
+		if (ew.enemies == null)
+			return;
 		for (int i = 0; i < permutation.Length; i++)
 		{
 			int tmp = permutation[i];
 			int rnd = Random.Range(i, permutation.Length);
 			permutation[i] = permutation[rnd];
 			permutation[rnd] = tmp;
-			if (!CheckPosition(rnd, width-1) && Random.value <= spawnDensity)
-			{
-				var e = Instantiate<GameObject>(enemyPrefab, transform).GetComponent<Enemy>();
-				e.transform.position = spawnPoint.position;
-				grid[rnd, width - 1].enemy = e;
-				grid[rnd, width - 1].easeInOut = Vector3.zero;
-				StartCoroutine(MoveEnemy(rnd, width - 1));
+			if (!CheckPosition(rnd, width-1)) {
+				float spawn = Random.value;
+				for (int j = 0; j < ew.enemies.Length; j++)
+				{
+					if (spawn < ew.enemies[j].probability)
+					{
+						var e = Instantiate<GameObject>(ew.enemies[j].prefab, transform).GetComponent<Enemy>();
+						e.transform.position = spawnPoint.position;
+						grid[rnd, width - 1].enemy = e;
+						grid[rnd, width - 1].easeInOut = Vector3.zero;
+						StartCoroutine(MoveEnemy(rnd, width - 1));
+					}
+					else
+					{
+						spawn -= ew.enemies[j].probability;
+					}
+				}
 			}
 		}
 	}
@@ -140,6 +160,7 @@ public class EnemyController : MonoBehaviour {
 		{
 			cache[i].Die();
 		}
+		GameState.instance.score += cache.Count*cache.Count*5;
 	}
 
 	public EnemyPos[,] GetGrid() { return grid; }
@@ -167,5 +188,19 @@ public class EnemyController : MonoBehaviour {
 		public Vector3 position;
 		public Enemy enemy;
 		public Vector3 easeInOut;
+	}
+
+	[System.Serializable]
+	public struct EnemyProbability
+	{
+		public GameObject prefab;
+		[Range(0, 1)] public float probability;
+	}
+
+	[System.Serializable]
+	public struct EnemyWave
+	{
+		public int startTurn;
+		public EnemyProbability[] enemies;
 	}
 }

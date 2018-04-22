@@ -254,7 +254,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c597d8c0a643ca4a9cf066c02cb8c80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cooldown: 2
+  cooldown: 1
   lr: {fileID: 120336327472082056}
   ps: {fileID: 198836488726924134}
   au: {fileID: 82201591575413592}

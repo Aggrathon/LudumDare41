@@ -13,7 +13,7 @@ public class Explosion : AAbility
 	public override void DoAction(int lane)
 	{
 		var grid = GameState.instance.enemies.GetGrid();
-		for (int j = 0; j < grid.GetLength(1); j++)
+		for (int j = 1; j < grid.GetLength(1); j++)
 		{
 			int i_ = lane;
 			int j_ = j;

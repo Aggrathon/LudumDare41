@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GameState : MonoBehaviour {
 
@@ -11,14 +12,44 @@ public class GameState : MonoBehaviour {
 	public float startDelay = 1.5f;
 	public GameObject skipButton;
 	public GameObject lostPanel;
+	public Text statusText;
 
-	int turns;
+	string statusFormat;
+	int _turns;
+	int _kills;
+	int _score;
+	public int turns
+	{
+		get { return _turns; }
+		set { _turns = value; score += 100; }
+	}
+	public int kills
+	{
+		get { return _kills; }
+		set { _kills = value; score += 25; }
+	}
+	public int score
+	{
+		get { return _score; }
+		set {
+			if (_score != value)
+			{
+				_score = value;
+				UpdateStatus();
+			}
+		}
+	}
+
 
 	void Start ()
 	{
 		instance = this;
 		StartCoroutine(DelayedStart());
-		turns = 0;
+		_turns = 0;
+		_kills = 0;
+		_score = 0;
+		statusFormat = statusText.text;
+		UpdateStatus();
 		skipButton.SetActive(false);
 		lostPanel.SetActive(false);
 	}
@@ -51,5 +82,10 @@ public class GameState : MonoBehaviour {
 	public void Restart()
 	{
 		SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+	}
+
+	public void UpdateStatus()
+	{
+		statusText.text = string.Format(statusFormat, turns, kills, score);
 	}
 }
