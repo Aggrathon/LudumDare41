@@ -39,7 +39,6 @@ public class SelectionMarkers : MonoBehaviour {
 
 	public void AddMarker(Vector3 pos, UnityAction callback)
 	{
-		pos = cam.WorldToScreenPoint(pos);
 		Button button;
 		if (activeIndex == markers.Count)
 		{
@@ -52,11 +51,7 @@ public class SelectionMarkers : MonoBehaviour {
 		}
 		activeIndex++;
 		button.gameObject.SetActive(true);
-		pos = new Vector3(
-			pos.x / Screen.width * 1920,
-			pos.y / Screen.height * 1080,
-			0);
-		((RectTransform)button.transform).localPosition = pos;
+		button.transform.position = pos;
 		button.onClick.RemoveAllListeners();
 		button.onClick.AddListener(Reset);
 		button.onClick.AddListener(callback);
