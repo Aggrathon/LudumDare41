@@ -53,6 +53,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   deathFX: {fileID: 1692626850584580, guid: cc7b6de5dace3b04ab9ac01579acf030, type: 2}
+  secondLife: {fileID: 0}
+  spriteRenderer: {fileID: 0}
+  _description: An agent of chaos trying to ruin humanity!
 --- !u!212 &212596924262340668
 SpriteRenderer:
   m_ObjectHideFlags: 1

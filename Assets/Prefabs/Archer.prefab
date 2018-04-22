@@ -243,6 +243,7 @@ MonoBehaviour:
   sprite: {fileID: 212324305687244816}
   deathFX: {fileID: 1692626850584580, guid: cc7b6de5dace3b04ab9ac01579acf030, type: 2}
   ability: {fileID: 114271251907955754}
+  _description: Can deny access to an area with suppressing fire
 --- !u!212 &212324305687244816
 SpriteRenderer:
   m_ObjectHideFlags: 1

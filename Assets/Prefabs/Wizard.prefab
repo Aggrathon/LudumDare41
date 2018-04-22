@@ -273,6 +273,7 @@ MonoBehaviour:
   sprite: {fileID: 212497265948469580}
   deathFX: {fileID: 1692626850584580, guid: cc7b6de5dace3b04ab9ac01579acf030, type: 2}
   ability: {fileID: 114234844703459392}
+  _description: Who doesn't need some magical explosions in their life?
 --- !u!120 &120336327472082056
 LineRenderer:
   m_ObjectHideFlags: 1

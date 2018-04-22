@@ -64,6 +64,7 @@ public class GameState : MonoBehaviour {
 	public void EnemyTurn()
 	{
 		SelectionMarkers.instance.Reset();
+		HelpScreen.instance.CancelHelp();
 		turns++;
 		enemies.StartTurn();
 		skipButton.SetActive(false);
@@ -72,6 +73,7 @@ public class GameState : MonoBehaviour {
 	public void PlayerTurn()
 	{
 		SelectionMarkers.instance.Reset();
+		HelpScreen.instance.CancelHelp();
 		heroes.StartTurn();
 		skipButton.SetActive(true);
 	}

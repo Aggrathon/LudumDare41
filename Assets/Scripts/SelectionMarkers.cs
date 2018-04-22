@@ -13,6 +13,7 @@ public class SelectionMarkers : MonoBehaviour
 
 	List<Button> markers;
 	int activeIndex;
+	int startIndex;
 	Color defaultColor;
 
 	void Awake()
@@ -23,6 +24,7 @@ public class SelectionMarkers : MonoBehaviour
 		template.onClick.RemoveAllListeners();
 		template.onClick.AddListener(Reset);
 		defaultColor = template.targetGraphic.color;
+		startIndex = 0;
 	}
 
 	void OnClick(int num)
@@ -30,13 +32,31 @@ public class SelectionMarkers : MonoBehaviour
 		Reset();
 	}
 
+	public int AddStack()
+	{
+		int tmp = startIndex;
+		for (int i = 0; i < activeIndex; i++)
+			markers[i].gameObject.SetActive(false);
+		startIndex = activeIndex;
+		return tmp;
+	}
+
+	public void RemoveStack(int old)
+	{
+		Reset();
+		for (int i = old; i < activeIndex; i++)
+			markers[i].gameObject.SetActive(true);
+		Debug.Log(old + "  " + startIndex + "  " + activeIndex);
+		startIndex = old;
+	}
+
 	public void Reset()
 	{
-		for (int i = 0; i < activeIndex; i++)
+		for (int i = startIndex; i < activeIndex; i++)
 		{
 			markers[i].gameObject.SetActive(false);
 		}
-		activeIndex = 0;
+		activeIndex = startIndex;
 	}
 
 	public void AddMarker(Vector3 pos, UnityAction callback)

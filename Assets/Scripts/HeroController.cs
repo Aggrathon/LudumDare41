@@ -149,7 +149,9 @@ public class HeroController : MonoBehaviour
 			Gizmos.DrawWireSphere(spawnPoint.position, 0.5f);
 	}
 
-	struct HeroPos
+	public HeroPos[] GetHeroes() { return heroes; }
+
+	public struct HeroPos
 	{
 		public Hero hero;
 		public Vector3 easeInOut;

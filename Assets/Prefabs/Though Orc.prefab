@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 212596924262340668}
   - component: {fileID: 114075580562410494}
   m_Layer: 0
-  m_Name: OrcSecondLife
+  m_Name: Though Orc
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -53,8 +53,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   deathFX: {fileID: 1692626850584580, guid: cc7b6de5dace3b04ab9ac01579acf030, type: 2}
-  secondLife: {fileID: 0}
+  secondLife: {fileID: 21300000, guid: f2a3605ce0a80f443bdc7fe5ef4d06e9, type: 3}
   spriteRenderer: {fileID: 212596924262340668}
+  _description: An agent of chaos trying to ruin humanity\n...with his shield!
 --- !u!212 &212596924262340668
 SpriteRenderer:
   m_ObjectHideFlags: 1

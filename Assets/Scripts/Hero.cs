@@ -2,13 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Hero : MonoBehaviour {
+public class Hero : MonoBehaviour, IHelp {
 
 	public SpriteRenderer sprite;
 	public GameObject deathFX;
 	int cd;
 
 	public AAbility ability;
+
+	[SerializeField][TextArea] string _description;
+	public string description { get { return _description; } }
+	public string title { get { return name; } }
 
 	void Start () {
 		if (sprite == null)
@@ -33,7 +37,7 @@ public class Hero : MonoBehaviour {
 
 	public bool CanMove()
 	{
-		return cd <= 0;
+		return cd < 0;
 	}
 
 	public void StartTurn()

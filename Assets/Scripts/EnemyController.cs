@@ -165,7 +165,7 @@ public class EnemyController : MonoBehaviour {
 		{
 			cache[i].Die();
 		}
-		GameState.instance.score += cache.Count*cache.Count*5;
+		GameState.instance.score += cache.Count*cache.Count*8;
 	}
 
 	public EnemyPos[,] GetGrid() { return grid; }
