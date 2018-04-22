@@ -16,6 +16,9 @@ public class EnemyController : MonoBehaviour {
 	WaitForSeconds moveSpread;
 	List<Enemy> cache;
 
+	//Ugly hack to make archers work;
+	[System.NonSerialized] public int blockedI, blockedJ;
+
 	private void Start()
 	{
 		permutation = new int[lanes.Length];
@@ -28,6 +31,8 @@ public class EnemyController : MonoBehaviour {
 				grid[i, j] = new EnemyPos() { position = lanes[i].GetChild(j).position };
 		moveSpread = new WaitForSeconds(enemyMoveSpread);
 		cache = new List<Enemy>();
+		blockedI = -5;
+		blockedJ = -5;
 	}
 
 	public void StartTurn()
@@ -41,7 +46,7 @@ public class EnemyController : MonoBehaviour {
 		{
 			for (int j = 1; j < width; j++)
 			{
-				if (grid[i, j].enemy != null && grid[i, j - 1].enemy == null)
+				if (grid[i, j].enemy != null && grid[i, j - 1].enemy == null && !(i == blockedI && j-1 == blockedJ))
 				{
 					Move(i, j, i, j - 1);
 					yield return moveSpread;
