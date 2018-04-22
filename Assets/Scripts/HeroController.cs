@@ -3,7 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HeroController : MonoBehaviour {
+public class HeroController : MonoBehaviour
+{
 
 	public float heroMoveTime = 0.7f;
 	public Transform spawnPoint;
@@ -20,7 +21,7 @@ public class HeroController : MonoBehaviour {
 		hero.transform.position = spawnPoint.position;
 		hero.gameObject.SetActive(true);
 		int pos = 0;
-		while(pos < heroes.Length && (heroes[pos].hero != null || CheckPosition(pos)))
+		while (pos < heroes.Length && (heroes[pos].hero != null || CheckPosition(pos)))
 			pos++;
 		if (pos == heroes.Length)
 		{
@@ -48,7 +49,7 @@ public class HeroController : MonoBehaviour {
 		return false;
 	}
 
-	IEnumerator MovingHero(int pos, Action<int> onFinishedMoving=null)
+	IEnumerator MovingHero(int pos, Action<int> onFinishedMoving = null)
 	{
 		heroes[pos].hero.sprite.sortingOrder = tiles.Length - pos;
 		while ((tiles[pos].position - heroes[pos].hero.transform.position).sqrMagnitude > 0.01f)
@@ -95,6 +96,16 @@ public class HeroController : MonoBehaviour {
 	{
 		for (int i = 0; i < heroes.Length; i++)
 		{
+			if (heroes[i].hero != null)
+				heroes[i].hero.StartTurn();
+		}
+		ShowHeroSelection();
+	}
+
+	public void ShowHeroSelection()
+	{
+		for (int i = 0; i < heroes.Length; i++)
+		{
 			Hero h = heroes[i].hero;
 			if (h != null && h.CanMove())
 				SelectionMarkers.instance.AddMarker(tiles[i].position, () => { ShowMovement(h); });
@@ -103,14 +114,16 @@ public class HeroController : MonoBehaviour {
 
 	void ShowMovement(Hero hero)
 	{
+		SelectionMarkers.instance.AddMarker(hero.transform.position, ShowHeroSelection, new Color(1f, 0f, 0f, 0.7f));
 		for (int i = 0; i < heroes.Length; i++)
 		{
 			int j = i;
 			if (heroes[i].hero == null)
-				SelectionMarkers.instance.AddMarker(tiles[i].position, () => {
-						if (!MoveHero(hero, j, hero.DoAction))
-							ShowMovement(hero);
-					});
+				SelectionMarkers.instance.AddMarker(tiles[i].position, () =>
+				{
+					if (!MoveHero(hero, j, hero.DoAction))
+						ShowMovement(hero);
+				});
 		}
 	}
 
@@ -141,7 +154,7 @@ public class HeroController : MonoBehaviour {
 		public Hero hero;
 		public Vector3 easeInOut;
 
-		public HeroPos (Hero h)
+		public HeroPos(Hero h)
 		{
 			hero = h;
 			easeInOut = Vector3.zero;

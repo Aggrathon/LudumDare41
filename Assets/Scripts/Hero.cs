@@ -33,15 +33,12 @@ public class Hero : MonoBehaviour {
 
 	public bool CanMove()
 	{
-		if (cd > 0)
-		{
-			cd--;
-			return false;
-		}
-		else
-		{
-			return true;
-		}
+		return cd <= 0;
+	}
+
+	public void StartTurn()
+	{
+		cd--;
 	}
 }
 

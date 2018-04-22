@@ -4,7 +4,8 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
-public class SelectionMarkers : MonoBehaviour {
+public class SelectionMarkers : MonoBehaviour
+{
 
 	public static SelectionMarkers instance { get; protected set; }
 	public Button template;
@@ -12,6 +13,7 @@ public class SelectionMarkers : MonoBehaviour {
 
 	List<Button> markers;
 	int activeIndex;
+	Color defaultColor;
 
 	void Awake()
 	{
@@ -20,6 +22,7 @@ public class SelectionMarkers : MonoBehaviour {
 		instance = this;
 		template.onClick.RemoveAllListeners();
 		template.onClick.AddListener(Reset);
+		defaultColor = template.targetGraphic.color;
 	}
 
 	void OnClick(int num)
@@ -38,6 +41,11 @@ public class SelectionMarkers : MonoBehaviour {
 
 	public void AddMarker(Vector3 pos, UnityAction callback)
 	{
+		AddMarker(pos, callback, defaultColor);
+	}
+
+	public void AddMarker(Vector3 pos, UnityAction callback, Color c)
+	{
 		Button button;
 		if (activeIndex == markers.Count)
 		{
@@ -54,5 +62,6 @@ public class SelectionMarkers : MonoBehaviour {
 		button.onClick.RemoveAllListeners();
 		button.onClick.AddListener(Reset);
 		button.onClick.AddListener(callback);
+		button.targetGraphic.color = c;
 	}
 }
