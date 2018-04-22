@@ -5,6 +5,8 @@ using UnityEngine;
 public class Charge : AAbility {
 
 	public float chargeSpeed = 20.0f;
+	public GameObject trails;
+	public AudioSource au;
 
 	public override void DoAction(int lane)
 	{
@@ -22,6 +24,8 @@ public class Charge : AAbility {
 
 	IEnumerator Action(int i, int j)
 	{
+		au.Play();
+		trails.SetActive(true);
 		var grid = GameState.instance.enemies.GetGrid();
 		Vector3 target = transform.InverseTransformPoint(grid[i, j].position);
 		Vector3 dist = (target - transform.localPosition);
@@ -69,14 +73,21 @@ public class Charge : AAbility {
 			dist = (target - transform.localPosition);
 			length = dist.magnitude;
 		}
-		length = target.magnitude;
+		length = Time.time + 0.3f;
 		dist = Vector3.zero;
+		trails.SetActive(false);
 		while (transform.localPosition.sqrMagnitude > 0.1)
 		{
 			transform.localPosition = Vector3.SmoothDamp(transform.localPosition, Vector3.zero, ref dist, 0.5f, chargeSpeed*0.5f);
+			if (Time.time > length)
+			{
+				GameState.instance.enemies.CheckThreeInRow();
+				length -= 100f;
+			}
 			yield return null;
 		}
-		GameState.instance.enemies.CheckThreeInRow();
+		if (Time.time < length)
+			GameState.instance.enemies.CheckThreeInRow();
 		GameState.instance.EnemyTurn();
 	}
 }
