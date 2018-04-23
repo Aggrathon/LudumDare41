@@ -14,7 +14,7 @@ public class Hero : MonoBehaviour, IHelp {
 	public string description { get { return _description; } }
 	public string title { get { return name; } }
 
-	void Start () {
+	void Awake () {
 		if (sprite == null)
 			sprite = GetComponent<SpriteRenderer>();
 		GetComponentInParent<HeroController>().SpawnHero(this);
